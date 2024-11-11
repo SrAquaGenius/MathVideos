@@ -1,0 +1,45 @@
+name: Auto Create Video Versions
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  create_versions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if issue is a video project
+        if: contains(github.event.issue.title, 'Video Project')
+        run: |
+          curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          -d '{
+            "title": "[English] Full Version - '$(echo ${{ github.event.issue.title }})'",
+            "body": "'${{ github.event.issue.body }}'",
+            "labels": ["video", "English", "Full"]
+          }' "https://api.github.com/repos/${{ github.repository }}/issues"
+          curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          -d '{
+            "title": "[English] Shorts Version - '$(echo ${{ github.event.issue.title }})'",
+            "body": "'${{ github.event.issue.body }}'",
+            "labels": ["video", "English", "Shorts"]
+          }' "https://api.github.com/repos/${{ github.repository }}/issues"
+          curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          -d '{
+            "title": "[Portuguese] Full Version - '$(echo ${{ github.event.issue.title }})'",
+            "body": "'${{ github.event.issue.body }}'",
+            "labels": ["video", "Portuguese", "Full"]
+          }' "https://api.github.com/repos/${{ github.repository }}/issues"
+          curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          -d '{
+            "title": "[Portuguese] Shorts Version - '$(echo ${{ github.event.issue.title }})'",
+            "body": "'${{ github.event.issue.body }}'",
+            "labels": ["video", "Portuguese", "Shorts"]
+          }' "https://api.github.com/repos/${{ github.repository }}/issues"

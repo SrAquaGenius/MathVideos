@@ -1,0 +1,19 @@
+name: "Video Project"
+description: "Template for a video project."
+labels:
+  - video
+fields:
+  - name: "Language"
+    description: "Select the language for the project."
+    required: true
+    type: dropdown
+    options:
+      - English
+      - Portuguese
+  - name: "Video Type"
+    description: "Select the type of content."
+    required: true
+    type: dropdown
+    options:
+      - Full
+      - Shorts
